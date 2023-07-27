@@ -27,22 +27,18 @@ const ZOOM_OUT = 4;
 export const Map: React.FC<MapProps> = ({ center, places }) => {
     const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    let lat;
-    let long;
+    let lat = -14.235;
+    let long = -51.9253;
     let zoom = 0;
     if (places?.length != 0) {
         lat = places ? places[0].properties.latitude : 0;
         long = places ? places[0].properties.longitude : 0;
     }
 
-    zoom = places && places.length > 10 ? ZOOM_OUT : ZOOM_IN;
+    zoom = places && (places.length > 10 || places.length === 0) ? ZOOM_OUT : ZOOM_IN;
 
     return (
-        <MapContainer
-            center={(center as L.LatLngExpression) || [lat, long]}
-            zoom={zoom}
-            className='h-[80vh] rounded-lg'
-        >
+        <MapContainer center={[lat, long]} zoom={zoom} className='h-[80vh] rounded-lg'>
             <TileLayer attribution={attribution} url={url} />
             {places?.map(({ properties }) => {
                 return (

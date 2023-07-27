@@ -71,8 +71,6 @@ export default function Home() {
             return item.properties.adm1name === state;
         });
 
-        console.log(places);
-
         setPlaces(places);
     };
 
@@ -99,8 +97,8 @@ export default function Home() {
                                           country={place.properties.adm0name}
                                           sigla={place.properties.iso_a2}
                                           rank={place.properties.rank_max}
-                                          latitude={place.properties.latitude}
-                                          longitude={place.properties.longitude}
+                                          latitude={place?.properties?.latitude}
+                                          longitude={place?.properties?.longitude}
                                       />
                                   );
                               })
