@@ -31,7 +31,8 @@ export type Features = {
 const BRAZIL_SIGLA = "BRA";
 
 export default function Home() {
-  const [geoBrasilData, setGeoBrasilData] = useState<Features[]>();
+
+  const [geoBrazilData, setGeoBrazilData] = useState<Features[]>();
   const [places, setPlaces] = useState<Features[]>();
 
   const Map = dynamic(
@@ -50,10 +51,8 @@ export default function Home() {
           (item: any) => {
             return item.properties.adm0_a3 === BRAZIL_SIGLA;
           },
-        );
-        console.log(brazilData);
-        
-        setGeoBrasilData(brazilData);
+        );        
+        setGeoBrazilData(brazilData);
         setPlaces(brazilData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -72,13 +71,13 @@ export default function Home() {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {   
     const state = upperCaseState(data.location);
     
-    if(!state) return setPlaces(geoBrasilData)
+    if(!state) return setPlaces(geoBrazilData)
     
-    const places: any = geoBrasilData?.filter((item: any) => {
+    const placesFiltered: any = places?.filter((item: any) => {
       return item.properties.adm1name === state;
     });
 
-    setPlaces(places);
+    setPlaces(placesFiltered);
   };
 
   return (
