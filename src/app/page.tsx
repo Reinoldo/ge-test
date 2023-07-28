@@ -11,6 +11,7 @@ import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { Card } from "./components/Card";
 import { upperCaseState } from "./helpers";
 import { Container } from "./components/Container";
+import Pagination from '@mui/material/Pagination';
 
 type Properties = {
   adm0name: string; // nome do pais
@@ -33,7 +34,8 @@ const BRAZIL_SIGLA = "BRA";
 
 export default function Home() {
   const [geoBrazilData, setGeoBrazilData] = useState<Features[]>();
-  const [places, setPlaces] = useState<Features[]>();
+  const [places, setPlaces] = useState<Features[]>(); 
+  const [currentPage, setCurrentPage] = useState(1);
 
   const Map = dynamic(
     () => import("./components/Map/index").then((map) => map.Map),
@@ -71,11 +73,11 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const state = upperCaseState(data.location);
-    if (!state) return setPlaces(geoBrazilData);
+    if (!state) return setPlaces(geoBrazilData);   
+
     const placesFiltered: any = geoBrazilData?.filter((item: any) => {
       return item.properties.adm1name === state;
-    });
-
+    });    
     setPlaces(placesFiltered);
   };
 
@@ -104,7 +106,9 @@ export default function Home() {
           </div>
           <div className="mx-2 w-1/3 transition-all md:mx-10">
             {places
-              ? places.map((place) => {
+              ? places
+                .slice((currentPage - 1) * 3, currentPage * 3)
+                .map((place) => {
                   return (
                     <Card
                       key={`${place.properties.adm1name}-${place.properties.geonameid}`}
@@ -119,6 +123,12 @@ export default function Home() {
                   );
                 })
               : null}
+            
+              
+              {places && places.length > 4 ? (                
+                <Pagination className="w-80" size='large' count={Math.floor(places.length/3 + 1)} shape="rounded" onChange={(event,page)=>setCurrentPage(page)} /> 
+              ): null}
+            
           </div>
         </div>
         <div className="p-3 sm:w-full md:w-3/4 md:p-10">

@@ -23,25 +23,21 @@ type MapProps = {
 
 const ZOOM_IN = 6;
 const ZOOM_OUT = 4;
+let BRAZIL_LAT_LONG = [-14.235, -51.9253]
 
 export const Map: React.FC<MapProps> = ({ center, places }) => {
   const attribution =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-  let lat = -14.235;
-  let long = -51.9253;
-  let zoom = 0;
   if (places?.length != 0) {
-    lat = places ? places[0].properties.latitude : 0;
-    long = places ? places[0].properties.longitude : 0;
+    BRAZIL_LAT_LONG[0] = places ? places[0].properties.latitude : 0;
+    BRAZIL_LAT_LONG[1] = places ? places[0].properties.longitude : 0;
   }
-
-  zoom =
-    places && (places.length > 10 || places.length === 0) ? ZOOM_OUT : ZOOM_IN;
+  const zoom = places && (places.length > 10 || places.length === 0) ? ZOOM_OUT : ZOOM_IN;
 
   return (
     <MapContainer
-      center={[lat, long]}
+      center={[BRAZIL_LAT_LONG[0], BRAZIL_LAT_LONG[1]]}
       zoom={zoom}
       className="h-[80vh] rounded-lg"
     >
