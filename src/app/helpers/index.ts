@@ -1,4 +1,5 @@
 export const upperCaseState = (state: string) => {
+  if (!state) return;
   const palavras = state.split(" ");
   const stateUpperCase = palavras
     .map((palavra: string) => {
