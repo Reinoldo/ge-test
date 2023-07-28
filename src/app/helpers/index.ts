@@ -3,7 +3,7 @@ export const upperCaseState = (state: string) => {
   const words = state.split(" ");
   const stateUpperCase = words
     .map((word: string) => {
-      if (word === "do" || word === "de") return word;      
+      if (word.length === 2) return word.toLowerCase();      
       return word[0].toUpperCase() + word.substring(1).toLowerCase();
     })
     .join(" ");
