@@ -10,6 +10,7 @@ import { Input } from "./components/Input";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { Card } from "./components/Card";
 import { upperCaseState } from "./helpers";
+import { Container } from "./components/Container";
 
 type Properties = {
   adm0name: string; // nome do pais
@@ -70,10 +71,8 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const state = upperCaseState(data.location);
-
     if (!state) return setPlaces(geoBrazilData);
-
-    const placesFiltered: any = places?.filter((item: any) => {
+    const placesFiltered: any = geoBrazilData?.filter((item: any) => {
       return item.properties.adm1name === state;
     });
 
@@ -81,15 +80,15 @@ export default function Home() {
   };
 
   return (
-    <main className="">
-      <div className="flex p-4 transition-all md:mx-10">
+    <Container>
+      <div className="flex py-4 transition-all">
         <Input
           onKeyDown={handleSubmit(onSubmit)}
           id="location"
           register={register}
           errors={errors}
         />
-        <Button small label="search" onClick={handleSubmit(onSubmit)} />
+        <Button icon={IoSearchOutline} label="" onClick={handleSubmit(onSubmit)} />
       </div>
       <div className="flex flex-col bg-neutral-50 sm:flex-col md:flex-row">
         <div>
@@ -126,6 +125,6 @@ export default function Home() {
           <Map places={places} />
         </div>
       </div>
-    </main>
+    </Container>
   );
 }

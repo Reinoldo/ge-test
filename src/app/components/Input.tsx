@@ -23,7 +23,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="relative">
       <input
-        className={`peer w-full rounded-l-md border-2
+        className={`peer w-full border-2
         bg-white p-2 px-4 font-normal
         outline-none transition disabled:cursor-not-allowed
         disabled:opacity-70 ${
@@ -33,7 +33,7 @@ export const Input: React.FC<InputProps> = ({
         disabled={disabled}
         type={type}
         {...register(id, { required })}
-        placeholder="Digite um estado brasileiro"
+        placeholder="Qual estado brasileiro?"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onKeyDown(e);
