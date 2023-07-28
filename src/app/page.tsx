@@ -31,7 +31,6 @@ export type Features = {
 const BRAZIL_SIGLA = "BRA";
 
 export default function Home() {
-
   const [geoBrazilData, setGeoBrazilData] = useState<Features[]>();
   const [places, setPlaces] = useState<Features[]>();
 
@@ -47,11 +46,9 @@ export default function Home() {
           "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson",
         );
         const data = response.data;
-        const brazilData = data?.features.filter(
-          (item: any) => {
-            return item.properties.adm0_a3 === BRAZIL_SIGLA;
-          },
-        );        
+        const brazilData = data?.features.filter((item: any) => {
+          return item.properties.adm0_a3 === BRAZIL_SIGLA;
+        });
         setGeoBrazilData(brazilData);
         setPlaces(brazilData);
       } catch (error) {
@@ -59,20 +56,23 @@ export default function Home() {
       }
     };
     fetchData();
-
   }, []);
 
-  const { register, handleSubmit } = useForm<FieldValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
     defaultValues: {
       location: "",
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {   
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const state = upperCaseState(data.location);
-    
-    if(!state) return setPlaces(geoBrazilData)
-    
+
+    if (!state) return setPlaces(geoBrazilData);
+
     const placesFiltered: any = places?.filter((item: any) => {
       return item.properties.adm1name === state;
     });
@@ -83,23 +83,24 @@ export default function Home() {
   return (
     <main className="">
       <div className="flex p-4 transition-all md:mx-10">
-        <Input onKeyDown={handleSubmit(onSubmit)} id="location" register={register} />
-        <Button
-          icon={IoSearchOutline}
-          label=""
-          onClick={handleSubmit(onSubmit)}
+        <Input
+          onKeyDown={handleSubmit(onSubmit)}
+          id="location"
+          register={register}
+          errors={errors}
         />
+        <Button small label="search" onClick={handleSubmit(onSubmit)} />
       </div>
       <div className="flex flex-col bg-neutral-50 sm:flex-col md:flex-row">
         <div>
-          <div className="mx-2 px-4 mt-2 transition-all md:mx-10 text-sm text-neutral-500">
+          <div className="mx-2 mt-2 px-4 text-sm text-neutral-500 transition-all md:mx-10">
             {places
               ? places?.length === 1
                 ? `${places?.length} Item`
                 : `${places?.length} Items`
               : null}
           </div>
-          <div className="mx-2 px-4 mb-10 text-3xl font-extrabold  text-[#3E4958] transition-all md:mx-10">
+          <div className="mx-2 mb-10 px-4 text-3xl font-extrabold  text-[#3E4958] transition-all md:mx-10">
             Features
           </div>
           <div className="mx-2 w-1/3 transition-all md:mx-10">
@@ -121,7 +122,7 @@ export default function Home() {
               : null}
           </div>
         </div>
-        <div className="md:p-10 p-3 sm:w-full md:w-3/4">
+        <div className="p-3 sm:w-full md:w-3/4 md:p-10">
           <Map places={places} />
         </div>
       </div>

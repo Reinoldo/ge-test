@@ -19,7 +19,7 @@ L.Icon.Default.mergeOptions({
 type MapProps = {
   center?: number[];
   places?: Features[];
-}
+};
 
 const ZOOM_IN = 6;
 const ZOOM_OUT = 4;
