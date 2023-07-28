@@ -32,6 +32,8 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@types/leaflet": "^1.9.3",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1"
   }
