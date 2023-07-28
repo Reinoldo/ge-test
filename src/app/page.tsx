@@ -101,7 +101,7 @@ export default function Home() {
                 : `${places?.length} Items`
               : null}
           </div>
-          <div className="mx-2 px-4 mb-10 text-3xl font-bold transition-all md:mx-10">
+          <div className="mx-2 px-4 mb-10 text-3xl font-extrabold  text-[#3E4958] transition-all md:mx-10">
             Features
           </div>
           <div className="mx-2 w-1/3 transition-all md:mx-10">
@@ -123,7 +123,7 @@ export default function Home() {
               : null}
           </div>
         </div>
-        <div className="p-10 sm:w-full md:w-3/4">
+        <div className="md:p-10 p-3 sm:w-full md:w-3/4">
           <Map places={places} />
         </div>
       </div>

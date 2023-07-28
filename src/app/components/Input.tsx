@@ -24,7 +24,7 @@ export const Input: React.FC<InputProps> = ({
       <input
         className="
         peer w-full rounded-l-md border-2
-        bg-white p-2 px-4 font-semibold
+        bg-white p-2 px-4 font-normal
         outline-none transition disabled:cursor-not-allowed
         disabled:opacity-70"        
         id={id}

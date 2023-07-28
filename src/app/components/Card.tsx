@@ -23,7 +23,7 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div className="mx-4 my-5 flex w-64 flex-col rounded-lg shadow-md shadow-neutral-300 hover:shadow-indigo-500/40 ">
-      <div className="px-4 pt-4 text-lg font-extrabold">{cityName}</div>
+      <div className="px-4 pt-4 text-lg font-extrabold text-[#3E4958]">{cityName}</div>
       <div className="flex flex-row px-4 py-2 text-[#3E4958]">
         <div className="flex justify-center pr-2 align-middle">
           <div className="flex pr-1.5 align-baseline">
@@ -47,7 +47,7 @@ export const Card: React.FC<CardProps> = ({
       <div className="px-4 py-2 font-extralight text-[#3E4958]">
         <div>Coordenadas:</div>
         <div className="flex flex-col">
-          <div>Latitude: {latitude}</div>
+          <div>Latitude: {latitude},</div>
           <div>Longitude: {longitude}</div>
         </div>
         <div></div>
