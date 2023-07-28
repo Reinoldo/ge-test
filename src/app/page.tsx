@@ -28,15 +28,10 @@ export type Features = {
   gemoetry: {};
 };
 
-export type GeoDataProps = {
-  type: string;
-  features: Features;
-};
-
 const BRAZIL_SIGLA = "BRA";
 
 export default function Home() {
-  const [geoBrasilData, setGeoBrasilData] = useState<GeoDataProps[]>();
+  const [geoBrasilData, setGeoBrasilData] = useState<Features[]>();
   const [places, setPlaces] = useState<Features[]>();
 
   const Map = dynamic(
@@ -51,13 +46,15 @@ export default function Home() {
           "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson",
         );
         const data = response.data;
-        const brasil = data?.features.filter(
+        const brazilData = data?.features.filter(
           (item: any) => {
             return item.properties.adm0_a3 === BRAZIL_SIGLA;
           },
         );
-        setGeoBrasilData(brasil);
-        setPlaces(brasil);
+        console.log(brazilData);
+        
+        setGeoBrasilData(brazilData);
+        setPlaces(brazilData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -72,9 +69,11 @@ export default function Home() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {  
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {   
     const state = upperCaseState(data.location);
-
+    
+    if(!state) return setPlaces(geoBrasilData)
+    
     const places: any = geoBrasilData?.filter((item: any) => {
       return item.properties.adm1name === state;
     });
@@ -85,7 +84,7 @@ export default function Home() {
   return (
     <main className="">
       <div className="flex p-4 transition-all md:mx-10">
-        <Input onKeyDown={handleSubmit(onSubmit)} id="location" register={register} required />
+        <Input onKeyDown={handleSubmit(onSubmit)} id="location" register={register} />
         <Button
           icon={IoSearchOutline}
           label=""
