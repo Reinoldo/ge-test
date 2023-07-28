@@ -16,7 +16,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow.src,
 });
 
-interface MapProps {
+type MapProps = {
   center?: number[];
   places?: Features[];
 }
